@@ -7,6 +7,11 @@
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_HEADER, false);
 
+	// got the result in json form
 	$result = curl_exec($ch);
-	echo $result;
+	
+	// converting the result in a php array
+	$s_results=json_decode($result);
+	for $i in $s_results:
+		secho $i->{'url'};
 ?>
