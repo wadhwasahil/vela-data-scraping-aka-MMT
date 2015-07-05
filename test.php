@@ -1,5 +1,5 @@
 <?php include"header.html";?>
-<h1 style="margin-left:250px">Match[my]Talent Search</h1><hr />
+<h1 style="margin-left:250px">Match[my]Talent Search Engine</h1><hr />
 <?php 
 	$servername = "localhost";
 	$username = "root";
@@ -14,24 +14,35 @@
 ?>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("select.dancers").change(function(){
+		$('select.specializations').hide();
+		$('select.specifications').hide();
+	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("select.dancers").click(function(){
 			var dancers_id; 
 			dancers_id=$("select.dancers option:selected").val();
+		 $("select.specifications").hide();
 			//alert(dancers_id);
 	     	$.ajax({
                 type: "POST",
             	url: "sahil.php",
             	data: { id : dancers_id } 
         	}).done(function(data){
-            $("select.specializations").html(data);
-        });
+            		if(data.length>0){
+        			$("select.specializations").html(data);
+        			$("select.specializations").show();
+        		}
+        		else $("select.specializations").hide();
+        	});	
 		});
 	});
 </script>
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("select.specializations").change(function(){
+		$("select.specializations").click(function(){
 			var spid; 
 			spid=$("select.specializations option:selected").val();
 			//alert(spid);
@@ -40,8 +51,12 @@
             	url: "spec.php",
             	data: { id : spid } 
         	}).done(function(data){
-            $("select.specifications").html(data);
-        });
+        		if(data.length>0){
+        			$("select.specifications").html(data);
+        			$("select.specifications").show();
+        		}
+        		else $("select.specifications").hide();
+        	});
 		});
 	});
 </script>
@@ -60,7 +75,7 @@
 	</select>
 </div>
 
-<div id="1" style="float:left;width:22%;position:relative;">Specialization<hr />
+<div id="1" style="float:left;width:23%;position:relative;">Specialization<hr />
 	<select class="specializations">
 <?php	
 	$query = 'select * from talents_specializations';
@@ -74,7 +89,7 @@
 	</select>
 </div>
 
-<div id="2" style="float:left;width:30%;position:relative"> Specification<hr />
+<div id="2" style="float:left;width:15%;position:relative"> Specification<hr />
 	<select class="specifications">
 <?php 
 	$query = 'select * from talents_specifications';
@@ -89,7 +104,25 @@
 ?>
 	</select>
 </div>
+
+<div style="float:left;width:10%;position:relative">City<hr/ >
+	<select>
+		<option>Delhi</option>
+		<option>Ahmedabad</option>
+		<option>Mumbai</option>
+	</select>
+</div>
+
+<form role="form">Gender<hr />
+<input type="radio" name="vehicle" value="male"> Male <br>
+<div style="float:left;margin-left:829px">
+	<input type="radio" name="vehicle" value="female"> Female
+</div>
+</form>
+
 <br><br><br>
+<div style="float:left;margin-left:50px">
 	<form action="https://www.google.com#q=hi" method="get">
-		<button type="submit" class="btn btn-success">Go</button>
+		<button type="submit" class="btn btn-success">Search</button>
 	</form>
+</div>
