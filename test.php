@@ -63,6 +63,7 @@
 
 <div id="0" style="float:left;width:9%;position:relative;margin-left:50px">Talent<hr />
 	<select class="dancers">
+		<option value="0">Select Talent</option>
 <?php	
 	$query = 'select * from talents';
 	$ret_val = mysql_query($query,$conn);
@@ -77,39 +78,20 @@
 
 <div id="1" style="float:left;width:23%;position:relative;">Specialization<hr />
 	<select class="specializations">
-<?php	
-	$query = 'select * from talents_specializations';
-	$ret_val = mysql_query($query,$conn);
-	if(!$ret_val){
-		die('could not get data:'.mysql_error());
-	}
-	while($row = mysql_fetch_array($ret_val,MYSQL_ASSOC)){
-			echo '<option value='.$row['id'].'>'.$row['name'].'</option>';	}
-?>			
 	</select>
 </div>
 
 <div id="2" style="float:left;width:15%;position:relative"> Specification<hr />
 	<select class="specifications">
-<?php 
-	$query = 'select * from talents_specifications';
-	$ret_val = mysql_query($query,$conn);
-	if(!$ret_val){
-		die('could not get data:'.mysql_error());
-	}
-	while($row = mysql_fetch_array($ret_val,MYSQL_ASSOC)){
-		echo '<option>'.$row['name'].'</option>';
-	}
-	mysql_close($conn);
-?>
 	</select>
 </div>
 
 <div style="float:left;width:10%;position:relative">City<hr/ >
 	<select>
-		<option>Delhi</option>
-		<option>Ahmedabad</option>
-		<option>Mumbai</option>
+		<option value="0">Select City</option>
+		<option value="1">Delhi</option>
+		<option value="2">Ahmedabad</option>
+		<option value="3">Mumbai</option>
 	</select>
 </div>
 
