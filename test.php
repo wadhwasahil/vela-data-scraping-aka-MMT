@@ -1,18 +1,5 @@
-<?php include"header.html";?>
+<?php include"header.html"; include'connections.php'; ?>
 <h1 style="margin-left:250px">Match[my]Talent Search Engine</h1><hr />
-<?php 
-	$servername = "localhost";
-	$username = "root";
-	$password = "1234";
-	$dbname = "MMT";
-
-	$conn= mysql_connect($servername,$username,$password);
-	if(!$conn){
-		die('could not connect :'. mysql_error());
-	}
-	mysql_select_db($dbname);
-?>
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#submit_id").click(function(){
