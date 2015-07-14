@@ -1,48 +1,70 @@
 <?php include"header.html"; include'connections.php'; ?>
 <h1 style="margin-left:250px">Match[my]Talent Search Engine</h1><hr />
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#submit_id").click(function(){
 			$("#form_id").validate({
 				rules: { 
-					dancers_name: {
+					talents_name: {
 						required:true
 					}
 				},
 				messages: {
-					dancers_name:{
+					talents_name:{
 						required: ''
 					}
 				}
 			});
 			var form=$("#form_id");
 			if(form.valid()== false){
-				$("#dancers_name").css('background-color',"pink");
+				$("#talents_name").css('background-color',"pink");
 			}
 			else{
-				$("#dancers_name").css('background-color',"");	
+				$("#talents_name").css('background-color',"");	
 			}
+			var url = "https://www.google.co.in/search?#q=";
+			var string = $("#disp").val();
+			var city = $("#city option:selected").val();
+			var sex = $('#sex input:checked').val();
+			var query = "";
+			if(sex != undefined){
+				query += sex+"+";
+			}
+			//alert(string);
+			string = string.replace(/ /g,"+");
+			if(city != "")
+				query += string + " in "+city;
+			else
+				query += string + "";
+				//query+= "&as_epq="+string;
+			query += "&cr=countryIN";
+			url += query;
+			url += "&related%3A"+"http://www.matchmytalent.com/";
+			//url += "&allintext%3A"+string;
+			$('#form_id').attr('action',url); 
+			$('#sex input').removeAttr("checked");
 		});
 
-		$("#dancers_name").change(function(){
+		$("#talents_name").change(function(){
 			$("#form_id").validate({
 				rules: { 
-					dancers_name: {
+					talents_name: {
 						required:true
 					}
 				},
 				messages: {
-					dancers_name:{
+					talents_name:{
 						required: ''
 					}
 				}
 			});
 			var form=$("#form_id");
 			if(form.valid()== false){
-				$("#dancers_name").css('background-color',"pink");
+				$("#talents_name").css('background-color',"pink");
 			}
 			else{
-				$("#dancers_name").css('background-color',"");	
+				$("#talents_name").css('background-color',"");	
 			}
 		});		
 	});
@@ -51,32 +73,59 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('select.specializations').hide();
-		$('select.specifications').hide();
+			var spid='<option value="0">Select Specialization</option>';
+        	$("select.specializations").html(spid);
+	       	$("select.specializations").hide();
+	       	spid='<option value="0">Select Specification</option>';
+       		$("select.specifications").html(spid);
+	       	$("select.specifications").hide();
 	});
 </script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("select.dancers").change(function(){
-			var dancers_id; 
-			dancers_id=$("select.dancers option:selected").val();
-			if(dancers_id!=""){
+		$("select.talents").change(function(){
+			var talents_id; 
+			talents_id=$("select.talents option:selected").val();
+			if(talents_id!=""){
 				 $("select.specifications").hide();
-					//alert(dancers_id);
+					//alert(talents_id);
 			     	$.ajax({
 		                type: "POST",
 		            	url: "specializations.php",
-		            	data: { id : dancers_id } 
+		            	data: { id : talents_id } 
 		        	}).done(function(data){
 		            		if(data.length>0){
 		        			$("select.specializations").html(data);
 		        			$("select.specializations").show();
 		        		}
-		        		else $("select.specializations").hide();
-		        	});	
+		        		else {
+		        			var spid='<option value="0">Select Specialization</option>';
+        					$("select.specializations").html(spid);
+		        			$("select.specializations").hide();
+		        		}
+		        	});
+		        var tal_id=$("select.talents option:selected").val();
+		        var special_id=$("select.specializations option:selected").val();
+				var specific_id=$("select.specifications option:selected").val();
+				$.ajax({
+					type: "POST",
+					url: "string.php",
+					data: {
+						talent_id : tal_id,
+						specialization_id : special_id,
+						specification_id : specific_id
+					}
+				}).done(function(data){
+						$("#disp").val(data);
+				});
+
 	        }
 	        else{
+	        	var spid='<option value="0">Select Specialization</option>';
+        		$("select.specializations").html(spid);
 	        	$("select.specializations").hide();
+	        	spid='<option value="0">Select Specification</option>';
+        		$("select.specifications").html(spid);
 	        	$("select.specifications").hide();
 	        }
 		});
@@ -98,15 +147,64 @@
         			$("select.specifications").html(data);
         			$("select.specifications").show();
         		}
-        		else $("select.specifications").hide();
+        		else {
+        			spid='<option value="0">Select Specification</option>';
+        			$("select.specifications").html(spid);
+        			$("select.specifications").hide();
+        		}
         	});
+        	var tal_id=$("select.talents option:selected").val();
+			if(tal_id!=""){
+				var special_id=$("select.specializations option:selected").val();
+				var specific_id=$("select.specifications option:selected").val();
+				$.ajax({
+					type: "POST",
+					url: "string.php",
+					data: {
+						talent_id : tal_id,
+						specialization_id : special_id,
+						specification_id : specific_id
+					}
+				}).done(function(data){
+						$("#disp").val(data);
+				});
+			}
+			else{
+				$('#disp').val("");
+			}
 		});
 	});
 </script>
 
-<form action="https://www.google.co.in" id="form_id" method="POST" novalidate="novalidate">
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("select.specifications").change(function(){
+			var tal_id=$("select.talents option:selected").val();
+			if(tal_id!=""){
+				var special_id=$("select.specializations option:selected").val();
+				var specific_id=$("select.specifications option:selected").val();
+				$.ajax({
+					type: "POST",
+					url: "string.php",
+					data: {
+						talent_id : tal_id,
+						specialization_id : special_id,
+						specification_id : specific_id
+					}
+				}).done(function(data){
+						$("#disp").val(data);
+				});
+			}
+			else{
+				$('#disp').val("");
+			}
+		});	
+	});
+</script>
+
+<form target=" _blank" action="" id="form_id" method="POST" novalidate="novalidate">
 <div id="0" style="float:left;width:9%;position:relative;margin-left:50px">Talent<hr />
-	<select id="dancers_name" name="dancers_name" class="dancers">
+	<select id="talents_name" name="talents_name" class="talents">
 		<option value="">Select Talent</option>
 <?php	
 	$query = 'select * from talents';
@@ -130,20 +228,21 @@
 	</select>
 </div>
 
-<div style="float:left;width:10%;position:relative">City<hr/ >
+<div id="city" style="float:left;width:10%;position:relative">City<hr/ >
 	<select>
-		<option value="0">Select City</option>
-		<option value="1">Delhi</option>
-		<option value="2">Ahmedabad</option>
-		<option value="3">Mumbai</option>
+		<option value="">Select City</option>
+		<option value="Delhi">Delhi</option>
+		<option value="Ahmedabad">Ahmedabad</option>
+		<option value="Mumbai">Mumbai</option>
+		<option value="Kolkata">Kolkata</option>
+		<option value="Pune">Pune</option>
 	</select>
 </div>
 
 Gender<hr />
-<span>
-<input type="radio" name="vehicle" value="male"> Male<br>
-<div style="float:left;margin-left:829px">
-<input type="radio" name="vehicle" value="female"> Female
+<div id="sex">
+<input type="radio" name="vehicle" value="Male"> Male<br>
+<input style="float:left;margin-left:829px" type="radio" name="vehicle" value="Female"> &nbsp;Female
 </div>
 
 <br><br><br>
@@ -151,3 +250,7 @@ Gender<hr />
 		<input id="submit_id" type="submit" class="btn btn-success" value="Search" />
 </div>
 </form>
+
+<div style="margin-left:150px;margin-top:4px">
+	<input id="disp" style="width:250px"type="text" placeholder="Query" value=""/>	
+</div>
