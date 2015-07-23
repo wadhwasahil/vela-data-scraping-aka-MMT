@@ -23,24 +23,25 @@
 			else{
 				$("#talents_name").css('background-color',"");	
 			}
-			var url = "https://www.google.co.in/search?#q=";
+			var url = "https://www.google.co.in/search?";
 			var string = $("#disp").val();
 			var city = $("#city option:selected").val();
 			var sex = $('#sex input:checked').val();
 			var query = "";
+			var temp = string.split(" ");
 			if(sex != undefined){
-				query += sex+"+";
+				query +="q=allintext:"+sex+"+";
 			}
+			else{
+				query+="q=allintext:";
+			}
+			query+= string;
 			//alert(string);
 			string = string.replace(/ /g,"+");
-			if(city != "")
-				query += string + " in "+city;
-			else
-				query += string + "";
-				//query+= "&as_epq="+string;
-			query += "&cr=countryIN";
+			if(city != ""){
+				query += "+"+city;
+			}
 			url += query;
-			url += "&related%3A"+"http://www.matchmytalent.com/";
 			//url += "&allintext%3A"+string;
 			$('#form_id').attr('action',url); 
 			$('#sex input').removeAttr("checked");
@@ -87,7 +88,14 @@
 			var talents_id; 
 			talents_id=$("select.talents option:selected").val();
 			if(talents_id!=""){
-				 $("select.specifications").hide();
+
+				 var spid='<option value="0">Select Specialization</option>';
+        		 $("select.specializations").html(spid);
+		         $("select.specializations").hide();
+		         spid='<option value="0">Select Specification</option>';
+		         $("select.specifications").html(spid);
+		          $("select.specifications").hide();
+
 					//alert(talents_id);
 			     	$.ajax({
 		                type: "POST",
@@ -116,6 +124,7 @@
 						specification_id : specific_id
 					}
 				}).done(function(data){
+					//alert(data);
 						$("#disp").val(data);
 				});
 
@@ -157,6 +166,10 @@
 			if(tal_id!=""){
 				var special_id=$("select.specializations option:selected").val();
 				var specific_id=$("select.specifications option:selected").val();
+				var spid='<option value="0">Select Specification</option>';
+		         $("select.specifications").html(spid);
+		         $("select.specifications").hide();
+
 				$.ajax({
 					type: "POST",
 					url: "string.php",
@@ -166,6 +179,7 @@
 						specification_id : specific_id
 					}
 				}).done(function(data){
+					//alert(data);
 						$("#disp").val(data);
 				});
 			}

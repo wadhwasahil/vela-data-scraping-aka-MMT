@@ -23,9 +23,11 @@ include('connections.php');
   	}
   	$temp = split(' ', $string2);
   	$cnt = substr_count($string2, ' ');
+  	$temp[$cnt] = strtolower($temp[$cnt]);
+  	$copy = strtolower($string1);
   	if($string2 != ""){	
   		if($cnt >= 1)
-  		if(strcmp($temp[1],$string1)==0) 
+  		if(strcmp($temp[$cnt],$copy)==0) 
   			$string1="";
   	}
   	if($string1 != "")	
