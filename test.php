@@ -1,6 +1,6 @@
 <?php include"header.html"; include'connections.php'; ?>
-<h1 style="margin-left:250px">Match[my]Talent Search Engine</h1><hr />
-
+<h1 style="margin-left:250px;font-style:sans-serif">Match[my]Talent Search Engine</h1><hr />
+<body>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#submit_id").click(function(){
@@ -36,16 +36,27 @@
 				query+="q=allintext:";
 			}
 			query+= string;
+			query+="&sort=date&cr=countryIN";
 			//alert(string);
 			string = string.replace(/ /g,"+");
 			if(city != ""){
 				query += "+"+city;
 			}
 			url += query;
+			url +="&aqs=chrome..69i57.1033j0j7&sourceid=chrome&es_sm=93& -site:https:://www.google.co.in";
 			//url += "&allintext%3A"+string;
 			$('#form_id').attr('action',url); 
 			$('#sex input').removeAttr("checked");
+			$.ajax({
+					type: "POST",
+					url: "script.php",
+					data: {
+						url : url
+					}
+				}).done(function(data){
+				});
 		});
+
 
 		$("#talents_name").change(function(){
 			$("#form_id").validate({
@@ -136,6 +147,7 @@
 	        	spid='<option value="0">Select Specification</option>';
         		$("select.specifications").html(spid);
 	        	$("select.specifications").hide();
+	        	$("#disp").val("")
 	        }
 		});
 	});
@@ -167,6 +179,8 @@
 				var special_id=$("select.specializations option:selected").val();
 				var specific_id=$("select.specifications option:selected").val();
 				var spid='<option value="0">Select Specification</option>';
+				if(special_id==0)
+					specific_id=0;
 		         $("select.specifications").html(spid);
 		         $("select.specifications").hide();
 
@@ -217,7 +231,7 @@
 </script>
 
 <form target=" _blank" action="" id="form_id" method="POST" novalidate="novalidate">
-<div id="0" style="float:left;width:9%;position:relative;margin-left:50px">Talent<hr />
+<div id="0" style="float:left;width:9%;position:relative;margin-left:50px">Talent<hr align="left"/>
 	<select id="talents_name" name="talents_name" class="talents">
 		<option value="">Select Talent</option>
 <?php	
@@ -252,9 +266,7 @@
 		<option value="Pune">Pune</option>
 	</select>
 </div>
-
-Gender<hr />
-<div id="sex">
+<div id="sex style="float:left;width:10%;position:relative"">Gender<hr align="left" width="4%"/>
 <input type="radio" name="vehicle" value="Male"> Male<br>
 <input style="float:left;margin-left:829px" type="radio" name="vehicle" value="Female"> &nbsp;Female
 </div>
@@ -268,3 +280,20 @@ Gender<hr />
 <div style="margin-left:150px;margin-top:4px">
 	<input id="disp" style="width:250px"type="text" placeholder="Query" value=""/>	
 </div>
+</body>
+<footer style="clear: both;
+ position: bottom;
+ z-index: 10;
+ height: 100px;
+ margin-top: 200px">
+</footer>
+<div id="container">
+ <div id="content"></div>
+</div>
+<div id="footer" style="clear: both;
+ position: relative;
+ z-index: 10;
+ align:center;
+ height: 3em;
+ margin-top:4px;
+ margin-top: -3em"><p style="font-style:italic">Powered by: <u><a href="http://www.matchmytalent.com/">Match[my]Talent</a></u></p></div>
