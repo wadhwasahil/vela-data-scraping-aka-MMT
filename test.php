@@ -147,7 +147,7 @@
 	        	spid='<option value="0">Select Specification</option>';
         		$("select.specifications").html(spid);
 	        	$("select.specifications").hide();
-	        	$("#disp").val("")
+	        	$("#disp").val("");
 	        }
 		});
 	});
@@ -268,7 +268,7 @@
 </div>
 <div id="sex style="float:left;width:10%;position:relative"">Gender<hr align="left" width="4%"/>
 <input type="radio" name="vehicle" value="Male"> Male<br>
-<input style="float:left;margin-left:829px" type="radio" name="vehicle" value="Female"> &nbsp;Female
+<input style="float:left;margin-left:800px" type="radio" name="vehicle" value="Female"> &nbsp;Female
 </div>
 
 <br><br><br>
@@ -280,20 +280,28 @@
 <div style="margin-left:150px;margin-top:4px">
 	<input id="disp" style="width:250px"type="text" placeholder="Query" value=""/>	
 </div>
+
 </body>
-<footer style="clear: both;
- position: bottom;
- z-index: 10;
- height: 100px;
- margin-top: 200px">
+<footer>
+<p style="font-style:italic"><h4>Powered by: <u><a href="http://www.matchmytalent.com/">Match[my]Talent</a></u></h4></p>
 </footer>
-<div id="container">
- <div id="content"></div>
+<!--<script type="text/javascript">
+	$(document).ready(function(){
+		$("#tt li").click(function(){
+			spid=this.value;
+			alert(spid);
+		});
+	});
+</script>
+
+<div class="dropdown">
+  <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown trigger
+    <span class="caret"></span>
+  </button>
+  <ul id="tt" class="dropdown-menu" aria-labelledby="dLabel">
+    <li value="7">hi</li>
+    <li value="8">bi</li>
+  </ul>
 </div>
-<div id="footer" style="clear: both;
- position: relative;
- z-index: 10;
- align:center;
- height: 3em;
- margin-top:4px;
- margin-top: -3em"><p style="font-style:italic">Powered by: <u><a href="http://www.matchmytalent.com/">Match[my]Talent</a></u></p></div>
+-->
