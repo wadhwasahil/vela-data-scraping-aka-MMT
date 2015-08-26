@@ -82,7 +82,6 @@
 	});
 </script>
 
-
 <script type="text/javascript">
 	$(document).ready(function(){
 			var spid='<option value="0">Select Specialization</option>';
@@ -229,8 +228,8 @@
 		});	
 	});
 </script>
-
 <form target=" _blank" action="" id="form_id" method="POST" novalidate="novalidate">
+
 <div id="0" style="float:left;width:9%;position:relative;margin-left:50px">Talent<hr align="left"/>
 	<select id="talents_name" name="talents_name" class="talents">
 		<option value="">Select Talent</option>
@@ -268,7 +267,7 @@
 </div>
 <div id="sex style="float:left;width:10%;position:relative"">Gender<hr align="left" width="4%"/>
 <input type="radio" name="vehicle" value="Male"> Male<br>
-<input style="float:left;margin-left:800px" type="radio" name="vehicle" value="Female"> &nbsp;Female
+<input style="float:left;margin-left:793px" type="radio" name="vehicle" value="Female"> &nbsp;Female
 </div>
 
 <br><br><br>
@@ -283,25 +282,5 @@
 
 </body>
 <footer>
-<p style="font-style:italic"><h4>Powered by: <u><a href="http://www.matchmytalent.com/">Match[my]Talent</a></u></h4></p>
+<p style="font-style:italic"><h4>Powered by: <u><a style="color:#000000"href="http://www.matchmytalent.com/">Match[my]Talent</a></u></h4></p>
 </footer>
-<!--<script type="text/javascript">
-	$(document).ready(function(){
-		$("#tt li").click(function(){
-			spid=this.value;
-			alert(spid);
-		});
-	});
-</script>
-
-<div class="dropdown">
-  <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown trigger
-    <span class="caret"></span>
-  </button>
-  <ul id="tt" class="dropdown-menu" aria-labelledby="dLabel">
-    <li value="7">hi</li>
-    <li value="8">bi</li>
-  </ul>
-</div>
--->
