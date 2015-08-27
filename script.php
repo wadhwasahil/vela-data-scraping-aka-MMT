@@ -3,8 +3,26 @@ $k=0;
 $id=0;
 $a="";
 $b="";
-//$curl=$_POST['url'];
-$curl="https://www.google.co.in/search?q=allintext:Theatre%20Actors&sort=date&cr=countryIN&aqs=chrome..69i57.1033j0j7&sourceid=chrome&es_sm=93&%20-site:https:://www.google.co.in";
+$flag=0;
+$temp="";
+$url=$_SERVER['QUERY_STRING'];
+for ($i=0; $i < strlen($url); $i++) { 
+    if($flag==1){
+      if($url[$i]!='+')
+        $temp.=$url[$i];
+      else{
+        $temp.=" ";
+      }
+    }
+
+    if($url[$i]=='=')
+      $flag=1;
+}
+$url=$temp;
+$file_name="files/".$url.".csv";
+$url= preg_replace('/\s+/', '%20', $url);
+$curl="https://www.google.co.in/search?q=allintext:".$url."&sort=date&cr=countryIN&aqs=chrome..69i57.1033j0j7&sourceid=chrome&es_sm=93&%20-site:https:://www.google.co.in";
+echo $curl;
 ini_set('max_execution_time', 30000);
 $label=0;
 $array=array();
@@ -58,7 +76,7 @@ foreach ($node as $tag) {
        echo '<hr>'; 
 }
 if($label==1) break;
-sleep(200);
+sleep(180);
 $k+=100;
 echo '<b><hr><hr></b>';
 }

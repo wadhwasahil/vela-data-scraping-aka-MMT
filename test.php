@@ -36,25 +36,31 @@
 				query+="q=allintext:";
 			}
 			query+= string;
-			query+="&sort=date&cr=countryIN";
-			//alert(string);
-			string = string.replace(/ /g,"+");
 			if(city != ""){
 				query += "+"+city;
 			}
+			query+="&sort=date&cr=countryIN";
+			//alert(string);
+			string = string.replace(/ /g,"+");
 			url += query;
 			url +="&aqs=chrome..69i57.1033j0j7&sourceid=chrome&es_sm=93& -site:https:://www.google.co.in";
 			//url += "&allintext%3A"+string;
-			$('#form_id').attr('action',url); 
-			$('#sex input').removeAttr("checked");
-			$.ajax({
+			var val=$("#format input:checked").val();
+				/*$.ajax({
 					type: "POST",
 					url: "script.php",
 					data: {
 						url : url
 					}
 				}).done(function(data){
-				});
+				});*/
+			var temp='script.php?q='+string;
+			if(val=="csv"){
+				$('#form_id').attr('action',temp);
+			}
+			else
+			$('#form_id').attr('action',url); 
+			$('#sex input').removeAttr("checked");
 		});
 
 
@@ -265,21 +271,25 @@
 		<option value="Pune">Pune</option>
 	</select>
 </div>
-<div id="sex style="float:left;width:10%;position:relative"">Gender<hr align="left" width="4%"/>
+<div id="sex" style="float:left;width:10%;position:relative">Gender<hr align="left" width="100%"/>
 <input type="radio" name="vehicle" value="Male"> Male<br>
-<input style="float:left;margin-left:793px" type="radio" name="vehicle" value="Female"> &nbsp;Female
+<input type="radio" name="vehicle" value="Female"> &nbsp;Female
 </div>
-
-<br><br><br>
-<div style="float:left;margin-left:50px">
-		<input id="submit_id" type="submit" class="btn btn-success" value="Search" />
+<div id="format" style="float:left;width:10%;position:relative">Format<hr align="left" width="40%"/>
+<input type="radio" name="vehicle" value="normal" checked="checked"> Normal Search<br>
+<input type="radio" name="vehicle" value="csv"> &nbsp;export as .csv
 </div>
+<br><br><br><br><br><br><br>
+<p>
+<div style="float:left;position:relative;left;margin-left:50px">
+		<input id="submit_id" style="float:position:relative;left;margin-left:50px" type="submit" class="btn btn-success" value="Search" />
+</p>
 </form>
-
-<div style="margin-left:150px;margin-top:4px">
+</div>
+&nbsp;
+<div style="float:left;positon:relative;margin-top:5px;margin-left:60px">
 	<input id="disp" style="width:250px"type="text" placeholder="Query" value=""/>	
 </div>
-
 </body>
 <footer>
 <p style="font-style:italic"><h4>Powered by: <u><a style="color:#000000"href="http://www.matchmytalent.com/">Match[my]Talent</a></u></h4></p>
