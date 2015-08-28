@@ -1,242 +1,36 @@
-<?php include"header.html"; include'connections.php'; ?>
-<h1 style="margin-left:250px;font-style:sans-serif">Match[my]Talent Search Engine</h1><hr />
-<body>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("#submit_id").click(function(){
-			$("#form_id").validate({
-				rules: { 
-					talents_name: {
-						required:true
-					}
-				},
-				messages: {
-					talents_name:{
-						required: ''
-					}
-				}
-			});
-			var form=$("#form_id");
-			if(form.valid()== false){
-				$("#talents_name").css('background-color',"pink");
-			}
-			else{
-				$("#talents_name").css('background-color',"");	
-			}
-			var url = "https://www.google.co.in/search?";
-			var string = $("#disp").val();
-			var city = $("#city option:selected").val();
-			var sex = $('#sex input:checked').val();
-			var query = "";
-			var temp = string.split(" ");
-			if(sex != undefined){
-				query +="q=allintext:"+sex+"+";
-			}
-			else{
-				query+="q=allintext:";
-			}
-			query+= string;
-			if(city != ""){
-				query += "+"+city;
-			}
-			query+="&sort=date&cr=countryIN";
-			//alert(string);
-			string = string.replace(/ /g,"+");
-			url += query;
-			url +="&aqs=chrome..69i57.1033j0j7&sourceid=chrome&es_sm=93& -site:https:://www.google.co.in";
-			//url += "&allintext%3A"+string;
-			var val=$("#format input:checked").val();
-				/*$.ajax({
-					type: "POST",
-					url: "script.php",
-					data: {
-						url : url
-					}
-				}).done(function(data){
-				});*/
-			var temp='script.php?q='+string;
-			if(val=="csv"){
-				$('#form_id').attr('action',temp);
-			}
-			else
-			$('#form_id').attr('action',url); 
-			$('#sex input').removeAttr("checked");
-		});
-
-
-		$("#talents_name").change(function(){
-			$("#form_id").validate({
-				rules: { 
-					talents_name: {
-						required:true
-					}
-				},
-				messages: {
-					talents_name:{
-						required: ''
-					}
-				}
-			});
-			var form=$("#form_id");
-			if(form.valid()== false){
-				$("#talents_name").css('background-color',"pink");
-			}
-			else{
-				$("#talents_name").css('background-color',"");	
-			}
-		});		
-	});
-</script>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-			var spid='<option value="0">Select Specialization</option>';
-        	$("select.specializations").html(spid);
-	       	$("select.specializations").hide();
-	       	spid='<option value="0">Select Specification</option>';
-       		$("select.specifications").html(spid);
-	       	$("select.specifications").hide();
-	});
-</script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("select.talents").change(function(){
-			var talents_id; 
-			talents_id=$("select.talents option:selected").val();
-			if(talents_id!=""){
-
-				 var spid='<option value="0">Select Specialization</option>';
-        		 $("select.specializations").html(spid);
-		         $("select.specializations").hide();
-		         spid='<option value="0">Select Specification</option>';
-		         $("select.specifications").html(spid);
-		          $("select.specifications").hide();
-
-					//alert(talents_id);
-			     	$.ajax({
-		                type: "POST",
-		            	url: "specializations.php",
-		            	data: { id : talents_id } 
-		        	}).done(function(data){
-		            		if(data.length>0){
-		        			$("select.specializations").html(data);
-		        			$("select.specializations").show();
-		        		}
-		        		else {
-		        			var spid='<option value="0">Select Specialization</option>';
-        					$("select.specializations").html(spid);
-		        			$("select.specializations").hide();
-		        		}
-		        	});
-		        var tal_id=$("select.talents option:selected").val();
-		        var special_id=$("select.specializations option:selected").val();
-				var specific_id=$("select.specifications option:selected").val();
-				$.ajax({
-					type: "POST",
-					url: "string.php",
-					data: {
-						talent_id : tal_id,
-						specialization_id : special_id,
-						specification_id : specific_id
-					}
-				}).done(function(data){
-					//alert(data);
-						$("#disp").val(data);
-				});
-
-	        }
-	        else{
-	        	var spid='<option value="0">Select Specialization</option>';
-        		$("select.specializations").html(spid);
-	        	$("select.specializations").hide();
-	        	spid='<option value="0">Select Specification</option>';
-        		$("select.specifications").html(spid);
-	        	$("select.specifications").hide();
-	        	$("#disp").val("");
-	        }
-		});
-	});
-</script>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("select.specializations").change(function(){
-			var spid; 
-			spid=$("select.specializations option:selected").val();
-			//alert(spid);
-	     	$.ajax({
-                type: "POST",
-            	url: "specifications.php",
-            	data: { id : spid } 
-        	}).done(function(data){
-        		if(data.length>0){
-        			$("select.specifications").html(data);
-        			$("select.specifications").show();
-        		}
-        		else {
-        			spid='<option value="0">Select Specification</option>';
-        			$("select.specifications").html(spid);
-        			$("select.specifications").hide();
-        		}
-        	});
-        	var tal_id=$("select.talents option:selected").val();
-			if(tal_id!=""){
-				var special_id=$("select.specializations option:selected").val();
-				var specific_id=$("select.specifications option:selected").val();
-				var spid='<option value="0">Select Specification</option>';
-				if(special_id==0)
-					specific_id=0;
-		         $("select.specifications").html(spid);
-		         $("select.specifications").hide();
-
-				$.ajax({
-					type: "POST",
-					url: "string.php",
-					data: {
-						talent_id : tal_id,
-						specialization_id : special_id,
-						specification_id : specific_id
-					}
-				}).done(function(data){
-					//alert(data);
-						$("#disp").val(data);
-				});
-			}
-			else{
-				$('#disp').val("");
-			}
-		});
-	});
-</script>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("select.specifications").change(function(){
-			var tal_id=$("select.talents option:selected").val();
-			if(tal_id!=""){
-				var special_id=$("select.specializations option:selected").val();
-				var specific_id=$("select.specifications option:selected").val();
-				$.ajax({
-					type: "POST",
-					url: "string.php",
-					data: {
-						talent_id : tal_id,
-						specialization_id : special_id,
-						specification_id : specific_id
-					}
-				}).done(function(data){
-						$("#disp").val(data);
-				});
-			}
-			else{
-				$('#disp').val("");
-			}
-		});	
-	});
-</script>
+<?php include"header.html"; 
+	  include'connections.php'; 
+	  include "docs.js";
+?>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-center">
+                    <li>
+                        <a href="#"><h1 style="font-style:sans-serif">Match[my]Talent Search Engine</h1></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+ <br><br><br><br><br>   
+<body style="background-color:#b0c4de;">
 <form target=" _blank" action="" id="form_id" method="POST" novalidate="novalidate">
 
-<div id="0" style="float:left;width:9%;position:relative;margin-left:50px">Talent<hr align="left"/>
+<div id="0" style="float:left;width:9%;position:relative;margin-left:50px"><b style="text-decoration: underline">Talent</b><br/><br/><br/>
 	<select id="talents_name" name="talents_name" class="talents">
 		<option value="">Select Talent</option>
 <?php	
@@ -250,18 +44,17 @@
 ?>
 	</select>
 </div>
-
-<div id="1" style="float:left;width:23%;position:relative;">Specialization<hr />
+<div id="1" style="float:left;width:23%;position:relative;margin-left:80px"><b style="text-decoration: underline">Specialization</b><br/><br/><br/>
 	<select class="specializations">
 	</select>
 </div>
 
-<div id="2" style="float:left;width:15%;position:relative"> Specification<hr />
+<div id="2" style="float:left;width:15%;margin-left:-15px"> <b style="text-decoration: underline">Specification</b><br/><br/><br/>
 	<select class="specifications">
 	</select>
 </div>
 
-<div id="city" style="float:left;width:10%;position:relative">City<hr/ >
+<div id="city" style="float:left;width:10%;margin-left:50px"><b style="text-decoration: underline">City</b><br/><br/><br/>
 	<select>
 		<option value="">Select City</option>
 		<option value="Delhi">Delhi</option>
@@ -271,26 +64,35 @@
 		<option value="Pune">Pune</option>
 	</select>
 </div>
-<div id="sex" style="float:left;width:10%;position:relative">Gender<hr align="left" width="100%"/>
+<div id="sex" style="float:left;width:10%;margin-left:50px"><b style="text-decoration: underline">Gender</b><br/><br/><br/>
 <input type="radio" name="vehicle" value="Male"> Male<br>
 <input type="radio" name="vehicle" value="Female"> &nbsp;Female
 </div>
-<div id="format" style="float:left;width:10%;position:relative">Format<hr align="left" width="40%"/>
+<div id="format" style="float:left;width:10%;margin-left:40px"><b style="text-decoration: underline">Format</b><br/><br/><br/>
 <input type="radio" name="vehicle" value="normal" checked="checked"> Normal Search<br>
 <input type="radio" name="vehicle" value="csv"> &nbsp;export as .csv
 </div>
-<br><br><br><br><br><br><br>
-<p>
-<div style="float:left;position:relative;left;margin-left:50px">
-		<input id="submit_id" style="float:position:relative;left;margin-left:50px" type="submit" class="btn btn-success" value="Search" />
-</p>
-</form>
-</div>
+<br><br><br><br><br><br><br><br><br><br><br>
 &nbsp;
-<div style="float:left;positon:relative;margin-top:5px;margin-left:60px">
-	<input id="disp" style="width:250px"type="text" placeholder="Query" value=""/>	
+<div style="margin-left:150px;" class="container">
+	<div class="row">
+        <div class="col-md-6">
+            <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <input id="disp"type="text" class="form-control input-lg" placeholder="Query" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-lg" type="button">
+                       	<span class=" glyphicon glyphicon-search"></span>&nbsp;&nbsp;&nbsp;
+                       	<input id="submit_id"type="submit" class="btn btn-info btn-lg" value="Search" />
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+	</div>
 </div>
 </body>
+</form>
 <footer>
 <p style="font-style:italic"><h4>Powered by: <u><a style="color:#000000"href="http://www.matchmytalent.com/">Match[my]Talent</a></u></h4></p>
 </footer>

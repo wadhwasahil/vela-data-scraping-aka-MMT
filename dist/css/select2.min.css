@@ -60,7 +60,7 @@
     display: block;
     position: absolute;
     left: -100000px;
-    width: 100%;
+    width: 150px;
     z-index: 1051;
 }
 .select2-results {
@@ -70,6 +70,9 @@
     list-style: none;
     margin: 0;
     padding: 0;
+}
+.bigdrop {
+    width: 600px !important;
 }
 .select2-results__option {
     padding: 6px;
