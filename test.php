@@ -18,7 +18,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-center">
                     <li>
-                        <a href="#"><h1 style="font-style:sans-serif">Match[my]Talent Search Engine</h1></a>
+                        <a href="#"><h1 style="font-style:sans-serif"><b><font color="white">Match[my]Talent Search Engine</font></b></h1></a>
                     </li>
                 </ul>
             </div>
@@ -30,8 +30,9 @@
 <body style="background-color:#b0c4de;">
 <form target=" _blank" action="" id="form_id" method="POST" novalidate="novalidate">
 
-<div id="0" style="float:left;width:9%;position:relative;margin-left:50px"><b style="text-decoration: underline">Talent</b><br/><br/><br/>
-	<select id="talents_name" name="talents_name" class="talents">
+<div id="0" style="float:left;width:9%;position:relative;margin-left:5px"><b style="text-decoration: underline">Talent</b><br/><br/><br/>
+	<div id="tal">
+    <select style="width:100%"id="talents_name" name="talents_name" class="talents">
 		<option value="">Select Talent</option>
 <?php	
 	$query = 'select * from talents';
@@ -43,19 +44,24 @@
 			echo '<option value='.$row['id'].'>'.$row['name'].'</option>';	}
 ?>
 	</select>
+    </div>
 </div>
-<div id="1" style="float:left;width:23%;position:relative;margin-left:80px"><b style="text-decoration: underline">Specialization</b><br/><br/><br/>
-	<select class="specializations">
+<div style="float:left;width:20%;position:relative;margin-left:80px"><b style="text-decoration: underline">Specialization</b><br/><br/><br/>
+	<div id="1">
+    <select style="width:70%"id="special" class="specializations">
+	   <option value="0">Select Specializations</option>
+    </select>
+    </div>
+</div>
+<div style="float:left;width:15%;margin-left:-15px"> <b style="text-decoration: underline">Specification</b><br/><br/><br/>
+	<div id="2">
+    <select style="width:100%"id="specs" class="specifications">
+        <option value="0">Select Specifications</option>
 	</select>
+    </div>
 </div>
-
-<div id="2" style="float:left;width:15%;margin-left:-15px"> <b style="text-decoration: underline">Specification</b><br/><br/><br/>
-	<select class="specifications">
-	</select>
-</div>
-
-<div id="city" style="float:left;width:10%;margin-left:50px"><b style="text-decoration: underline">City</b><br/><br/><br/>
-	<select>
+<div id="city" style="float:left;width:15%;margin-left:50px"><b style="text-decoration: underline">City</b><br/><br/><br/>
+	<select style="width:60%" id="ccity">
 		<option value="">Select City</option>
 		<option value="Delhi">Delhi</option>
 		<option value="Ahmedabad">Ahmedabad</option>
@@ -79,11 +85,11 @@
         <div class="col-md-6">
             <div id="custom-search-input">
                 <div class="input-group col-md-12">
-                    <input id="disp"type="text" class="form-control input-lg" placeholder="Query" />
+                    <input id="disp"type="text" class="form-control input-lg" placeholder="Query..." />
                     <span class="input-group-btn">
                         <button class="btn btn-info btn-lg" type="button">
                        	<span class=" glyphicon glyphicon-search"></span>&nbsp;&nbsp;&nbsp;
-                       	<input id="submit_id"type="submit" class="btn btn-info btn-lg" value="Search" />
+                       	<input id="submit_id"type="submit" class="btn btn-info btn-lg" style="margin-top:-3px"value="Search" />
                         </button>
                     </span>
                 </div>
@@ -93,6 +99,11 @@
 </div>
 </body>
 </form>
+<div id="error" style="margin-top:-150px;width:50%"class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  Please select a Talent
+</div>
 <footer>
 <p style="font-style:italic"><h4>Powered by: <u><a style="color:#000000"href="http://www.matchmytalent.com/">Match[my]Talent</a></u></h4></p>
 </footer>
