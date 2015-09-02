@@ -31,13 +31,13 @@ include('connections.php');
   			$string1="";
   	}
   	if($string1 != "")	
-		$string = $string3 .' '.$string2 .' '.$string1.'s';
+		$string = $string3 .' "'.$string2 .' '.$string1.'s"';
 	else
-		$string = $string3 .' '.$string2 .'s';
+		$string = $string3 .' "'.$string2 .'s"';
 	$cnt = substr_count($string2, ' ');
 	if($cnt == 2){
 		$temp = split(' ', $string);
-		$string = $temp[1] . ' '.$temp[2].'s';
+		$string = $temp[1] . ' "'.$temp[2].'s"';
 	}
 	$new_string="";
 	$flag=0;

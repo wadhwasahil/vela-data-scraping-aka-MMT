@@ -44,6 +44,7 @@
 				query+="q=allintext:";
 			}
 			query+= string;
+			query+=" 55555555..10000000000";
 			if(city != ""){
 				query += "+"+city;
 			}
@@ -206,6 +207,12 @@
 	$(document).ready(function(){
 		$("select.specializations").change(function(){
 			var spid; 
+				spid='<option value="0">Select Specification</option>';
+		         $("select.specifications").html(spid);
+		         $('#specs').select2({
+		         		width:'resolve'
+		         });
+		          $("#2").hide();
 			spid=$("select.specializations option:selected").val();
 			//alert(spid);
 	     	$.ajax({
