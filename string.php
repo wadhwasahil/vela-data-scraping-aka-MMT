@@ -21,35 +21,18 @@ include('connections.php');
 	 while($row = mysql_fetch_array($ret_val,MYSQL_ASSOC)){
       	$string3=$row['name'];  
   	}
-  	$temp = split(' ', $string2);
-  	$cnt = substr_count($string2, ' ');
-  	$temp[$cnt] = strtolower($temp[$cnt]);
-  	$copy = strtolower($string1);
-  	if($string2 != ""){	
-  		if($cnt >= 1)
-  		if(strcmp($temp[$cnt],$copy)==0) 
-  			$string1="";
+  	$string="";
+  	if($string3!=""){
+  	$string=$string3." ".$string2;
+  	$string=preg_replace('/(\w{2,})(?=.*?\\1)\W*/', '',$string);
   	}
-  	if($string1 != "")	
-		$string = $string3 .' '.$string2 .' '.$string1.'s';
-	else
-		$string = $string3 .' '.$string2 .'s';
-	$cnt = substr_count($string2, ' ');
-	if($cnt == 2){
-		$temp = split(' ', $string);
-		$string = $temp[1] . ' '.$temp[2].'s';
-	}
-	$new_string="";
-	$flag=0;
-	for($i=0 ; $i < strlen($string) ; $i++){
-		$char = substr($string, $i,1);
-		if($char==" " && $flag==0){
-			continue;
-		}
-		else{
-			$flag=1;
-			$new_string = $new_string . $char;
-		}
-	}
-	echo $new_string;
+  	else 
+  	if($string2!=""){
+  	$str=$string2." ".$string1;
+  	$str=preg_replace('/(\w{2,})(?=.*?\\1)\W*/', '', $str);
+  	$string.=$str;
+  }
+   else $string.=$string1;
+   $string=trim($string);
+  	print $string."s";
 ?>

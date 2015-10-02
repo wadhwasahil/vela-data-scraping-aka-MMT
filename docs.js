@@ -34,7 +34,6 @@
 			var url = "https://www.google.co.in/search?q=";
 			var string = $("#disp").val();
 			string=string.replace(/ /g,'+');
-			alert(string);
 			var city = $("#city option:selected").val();
 			var sex = $('#sex input:checked').val();
 			var query = "";
@@ -46,7 +45,7 @@
 			if(sex != undefined){
 				query +=" AND "+sex;
 			}
-			//alert(string);
+			alert(string);
 			string = string.replace(/ /g,"+");
 			url += query;
 			//url += "&allintext%3A"+string;
