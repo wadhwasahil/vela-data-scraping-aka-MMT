@@ -21,18 +21,8 @@ include('connections.php');
 	 while($row = mysql_fetch_array($ret_val,MYSQL_ASSOC)){
       	$string3=$row['name'];  
   	}
-  	$string="";
-  	if($string3!=""){
-  	$string=$string3." ".$string2;
-  	$string=preg_replace('/(\w{2,})(?=.*?\\1)\W*/', '',$string);
-  	}
-  	else 
-  	if($string2!=""){
-  	$str=$string2." ".$string1;
-  	$str=preg_replace('/(\w{2,})(?=.*?\\1)\W*/', '', $str);
-  	$string.=$str;
-  }
-   else $string.=$string1;
-   $string=trim($string);
-  	print $string."s";
+  	$temp=$string3." ".$string2." ".$string1;
+	$result_text = preg_replace('/\b(\w+)\s+\\1\b/i', '$1', $temp);
+	$result_text=preg_replace("/[^A-Za-z0-9 ]/", ' ', $result_text);
+	echo $result_text.'s';
 ?>

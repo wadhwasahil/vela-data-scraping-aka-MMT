@@ -63,7 +63,7 @@
 				$('#form_id').attr('action',temp);
 			}
 			else
-			$('#form_id').attr('action',url); 
+			$('#form_id').attr('action',url);
 			$('#sex input').removeAttr("checked");
 			if(form.valid()== false){
 				$('#error').show();

@@ -62,7 +62,7 @@
 </div>
 <div id="city" style="float:left;width:15%;margin-left:50px"><b style="text-decoration: underline">City</b><br/><br/><br/>
 	<select style="width:60%" id="ccity">
-		<option value="">Select City</option>
+		<option value="Select City">Select City</option>
 		<option value="Delhi">Delhi</option>
 		<option value="Ahmedabad">Ahmedabad</option>
 		<option value="Mumbai">Mumbai</option>
