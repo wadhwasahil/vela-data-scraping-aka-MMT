@@ -31,28 +31,24 @@
 			else{
 				$("#talents_name").css('background-color',"");	
 			}
-			var url = "https://www.google.co.in/search?";
+			var url = "https://www.google.co.in/search?q=";
 			var string = $("#disp").val();
+			string=string.replace(/ /g,'+');
+			alert(string);
 			var city = $("#city option:selected").val();
 			var sex = $('#sex input:checked').val();
 			var query = "";
 			var temp = string.split(" ");
-			if(sex != undefined){
-				query +="q=allintext:"+sex+"+";
-			}
-			else{
-				query+="q=allintext:";
-			}
 			query+= string;
-			query+=" 55555555..10000000000";
 			if(city != ""){
-				query += "+"+city;
+				query += " AND "+city;
 			}
-			query+="&sort=date&cr=countryIN";
+			if(sex != undefined){
+				query +=" AND "+sex;
+			}
 			//alert(string);
 			string = string.replace(/ /g,"+");
 			url += query;
-			url +="&aqs=chrome..69i57.1033j0j7&sourceid=chrome&es_sm=93& -site:https:://www.google.co.in";
 			//url += "&allintext%3A"+string;
 			var val=$("#format input:checked").val();
 				/*$.ajax({
