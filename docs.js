@@ -45,7 +45,6 @@
 			if(sex != undefined){
 				query +=" AND "+sex;
 			}
-			alert(string);
 			string = string.replace(/ /g,"+");
 			url += query;
 			//url += "&allintext%3A"+string;
